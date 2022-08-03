@@ -25,8 +25,10 @@ function titleClickHandler(event) {
         activeArticle.classList.remove('active');
     }
 
-    /* get 'href' attribute from the clicked link */
+    /* [IN PROGRESS] get 'href' attribute from the clicked link */
 
+    const elementAttribute = clickedElement.getAttribute('href');
+    console.log(elementAttribute);
     /* find the correct article using the selector (value of 'href' attribute) */
 
     /* add class 'active' to the correct article */
