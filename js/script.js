@@ -25,11 +25,15 @@ function titleClickHandler(event) {
         activeArticle.classList.remove('active');
     }
 
-    /* [IN PROGRESS] get 'href' attribute from the clicked link */
+    /* [DONE] get 'href' attribute from the clicked link */
 
     const elementAttribute = clickedElement.getAttribute('href');
     console.log(elementAttribute);
-    /* find the correct article using the selector (value of 'href' attribute) */
+
+    /* [IN PROGRESS] find the correct article using the selector (value of 'href' attribute) */
+
+    const articleID = elementAttribute.substring(1);
+    console.log('Article ID: ' + articleID);
 
     /* add class 'active' to the correct article */
 }
