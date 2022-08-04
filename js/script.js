@@ -53,14 +53,24 @@ function generateTitleLinks() {
     /* get the article id */
 
     const articleList = document.querySelectorAll(optArticleSelector);
+    let html = '';
 
     for (let article of articleList) {
         const articleID = article.getAttribute('id');
         const articleTitle = article.querySelector(optTitleSelector).innerHTML;
         const htmlElement = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
-        const titleList = document.querySelector(optTitleListSelector);
-        titleList.insertAdjacentHTML('beforeend', htmlElement);
+        html += htmlElement;
+        console.log(html);
     }
+
+    titleList.innerHTML = html;
+
+    const links = document.querySelectorAll('.titles a')
+
+    for (let link of links) {
+        link.addEventListener('click', titleClickHandler);
+    }
+
 
     /* find the title element */
 
@@ -74,8 +84,3 @@ function generateTitleLinks() {
 
 generateTitleLinks();
 
-const links = document.querySelectorAll('.titles a')
-
-for (let link of links) {
-    link.addEventListener('click', titleClickHandler);
-}
