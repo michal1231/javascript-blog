@@ -57,7 +57,9 @@ function generateTitleLinks() {
     for (let article of articleList) {
         const articleID = article.getAttribute('id');
         const articleTitle = article.querySelector(optTitleSelector).innerHTML;
-        console.log('tytuł: ' + articleTitle + ' ID: ' + articleID);
+        const htmlElement = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
+        const titleList = document.querySelector(optTitleListSelector);
+        titleList.insertAdjacentHTML('beforeend', htmlElement);
     }
 
     /* find the title element */
