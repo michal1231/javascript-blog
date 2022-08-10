@@ -3,84 +3,97 @@
 function titleClickHandler(event) {
     event.preventDefault();
     const clickedElement = this;
-
-    /* [DONE] remove class 'active' from all article links  */
-
     const activeLinks = document.querySelectorAll('.titles a.active');
-
     for (let activeLink of activeLinks) {
         activeLink.classList.remove('active');
     }
-
-    /* [DONE] add class 'active' to the clicked link */
-
     clickedElement.classList.add('active');
-
-    /* [DONE] remove class 'active' from all articles */
-
     const activeArticles = document.querySelectorAll('.posts .post.active');
 
     for (let activeArticle of activeArticles) {
         activeArticle.classList.remove('active');
     }
-
-    /* [DONE] get 'href' attribute from the clicked link */
-
     const elementAttribute = clickedElement.getAttribute('href');
-
-    /* [DONE] find the correct article using the selector (value of 'href' attribute) */
-
     const articleID = elementAttribute.substring(1);
-
-    /* add class 'active' to the correct article */
     const activeArticle = document.getElementById(articleID);
     activeArticle.classList.add('active');
 }
 
+
 const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
-    optTitleListSelector = '.titles';
+    optTitleListSelector = '.titles',
+    optArticleTagsSelector = '.post-tags .list';
 
-function generateTitleLinks() {
 
-    /* remove contents of titleList */
-
+function generateTitleLinks(customSelector = '') {
+    // clear title list
     const titleList = document.querySelector(optTitleListSelector);
     titleList.innerHTML = '';
-
-    /* for each article */
-
-    /* get the article id */
-
-    const articleList = document.querySelectorAll(optArticleSelector);
+    const articleList = document.querySelectorAll(optArticleSelector + customSelector);
     let html = '';
-
     for (let article of articleList) {
         const articleID = article.getAttribute('id');
         const articleTitle = article.querySelector(optTitleSelector).innerHTML;
         const htmlElement = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
         html += htmlElement;
-        console.log(html);
     }
-
     titleList.innerHTML = html;
-
     const links = document.querySelectorAll('.titles a');
-
     for (let link of links) {
         link.addEventListener('click', titleClickHandler);
     }
-
-
-    /* find the title element */
-
-    /* get the title from the title element */
-
-    /* create HTML of the link */
-
-    /* insert link into titleList */
-
 }
 
+
 generateTitleLinks();
+
+
+function generateTags() {
+    const exampleTags = document.querySelectorAll(optArticleTagsSelector);
+    for (let tags of exampleTags) {
+        tags.innerHTML = '';
+    }
+    const articles = document.querySelectorAll(optArticleSelector);
+    for (let article of articles) {
+        const wrapper = article.querySelector('.list');
+        let html = '';
+        const tagsArray = article.getAttribute('data-tags').split(' ');
+        for (let tag of tagsArray) {
+            const singularTag = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>\n';
+            html += singularTag;
+        }
+        wrapper.innerHTML = html;
+    }
+}
+
+
+generateTags();
+
+
+function tagClickHandler(event) {
+    event.preventDefault();
+    const clickedElement = this;
+    const href = clickedElement.getAttribute('href');
+    const tag = href.substring(5);
+    const activeTags = document.querySelectorAll('a.active[href^="#tag-]');
+    for (let tag of activeTags) {
+        tag.classList.remove('active');
+    }
+    const sameTags = document.querySelectorAll('a[href="#tag-' + href + '"]');
+    for (let tag of sameTags) {
+        tag.classList.add('active');
+    }
+    generateTitleLinks('[data-tags~="' + tag + '"]');
+}
+
+function addClickListenersToTags() {
+    const tagLinks = document.querySelectorAll(optArticleTagsSelector + ' a');
+    for (let link of tagLinks) {
+        link.addEventListener('click', tagClickHandler);
+    }
+}
+
+addClickListenersToTags();
+
 
