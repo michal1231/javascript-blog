@@ -76,13 +76,14 @@ function tagClickHandler(event) {
     const clickedElement = this;
     const href = clickedElement.getAttribute('href');
     const tag = href.substring(5);
-    const activeTags = document.querySelectorAll('a.active[href^="#tag-]');
+    const activeTags = document.querySelectorAll('a.active[href^="#tag-"]');
     for (let tag of activeTags) {
         tag.classList.remove('active');
     }
-    const sameTags = document.querySelectorAll('a[href="#tag-' + href + '"]');
+    const sameTags = document.querySelectorAll('a[href="' + href + '"]');
     for (let tag of sameTags) {
         tag.classList.add('active');
+        console.log(tag);
     }
     generateTitleLinks('[data-tags~="' + tag + '"]');
 }
