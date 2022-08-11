@@ -103,11 +103,13 @@ function generateTags() {
         let html = '';
         const tagsArray = article.getAttribute('data-tags').split(' ');
         for (let tag of tagsArray) {
+            const singularTag = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>\n';
             if (!allTags.hasOwnProperty(tag)) {
                 allTags[tag] = 1;
             } else {
                 allTags[tag]++;
             }
+            html += singularTag;
         }
         wrapper.innerHTML = html;
     }
