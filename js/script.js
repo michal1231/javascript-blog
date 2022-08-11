@@ -111,6 +111,12 @@ function generateAuthors() {
         author.innerHTML = '';
     }
 
+    for (let article of articles) {
+        const authorWrapper = article.querySelector(optArticleAuthorSelector);
+        const author = article.getAttribute('data-author');
+        authorWrapper.innerHTML = 'by ' + author;
+    }
+
 }
 
 generateAuthors();
