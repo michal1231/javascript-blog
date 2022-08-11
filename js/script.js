@@ -125,4 +125,20 @@ function generateAuthors() {
 generateAuthors();
 
 
+function authorClickHandler(event) {
+    event.preventDefault();
+    const clickedElement = this;
+    const href = clickedElement.getAttribute('href');
+    const author = href.substring(8).replace('-', ' ');
+    generateTitleLinks('[data-author="' + author + '"]');
+}
 
+
+function addClickListenersToAuthors() {
+    const authorLinks = document.querySelectorAll(optArticleAuthorSelector + ' a');
+    for (let link of authorLinks) {
+        link.addEventListener('click', authorClickHandler);
+    }
+}
+
+addClickListenersToAuthors();
