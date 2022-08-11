@@ -24,7 +24,8 @@ const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
-    optArticleAuthorSelector = '.post-author';
+    optArticleAuthorSelector = '.post-author',
+    optTagsListSelector = '.tags.list';
 
 
 function generateTitleLinks(customSelector = '') {
@@ -51,6 +52,7 @@ generateTitleLinks();
 
 
 function generateTags() {
+    const allTags = {};
     const exampleTags = document.querySelectorAll(optArticleTagsSelector);
     for (let tags of exampleTags) {
         tags.innerHTML = '';
@@ -61,11 +63,21 @@ function generateTags() {
         let html = '';
         const tagsArray = article.getAttribute('data-tags').split(' ');
         for (let tag of tagsArray) {
-            const singularTag = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>\n';
-            html += singularTag;
+            if (!allTags.hasOwnProperty(tag)) {
+                allTags[tag] = 1;
+            } else {
+                allTags[tag]++;
+            }
         }
         wrapper.innerHTML = html;
     }
+    const tagList = document.querySelector(optTagsListSelector);
+
+    let allTagsHTML = '';
+    for (let tag in allTags) {
+        allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + ' ' + allTags[tag] + '</a></li>\n';
+    }
+    tagList.innerHTML = allTagsHTML;
 }
 
 
