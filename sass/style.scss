@@ -88,6 +88,36 @@ body {
     .active {
         font-weight: bold;
     }
+
+    &.tags li {
+        display: inline;
+        padding: 0px 3px;
+
+        .tag-size-1 {
+            font-size: 16px;
+            color: orange;
+        }
+
+        .tag-size-2 {
+            font-size: 20px;
+            color: lightblue;
+        }
+
+        .tag-size-3 {
+            font-size: 24px;
+            color: green;
+        }
+
+        .tag-size-4 {
+            font-size: 28px;
+            color: purple;
+        }
+
+        .tag-size-5 {
+            font-size: 32px;
+            color: blue;
+        }
+    }
 }
 
 .list-horizontal {
