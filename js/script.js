@@ -3,7 +3,8 @@
 const templates = {
     articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
     tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
-    authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
+    authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+    tagCloud: Handlebars.compile(document.querySelector('#template-tag-cloud').innerHTML)
 };
 
 
@@ -34,7 +35,7 @@ const optArticleSelector = '.post',
     optArticleAuthorSelector = '.post-author',
     optTagsListSelector = '.tags.list',
     optCloudClassCount = 5,
-    optCloudclassPrefix = 'tag-size-',
+    optCloudClassPrefix = 'tag-size-',
     optAuthorsListSelector = '.list.authors';
 
 
@@ -112,9 +113,7 @@ function generateTags() {
         let html = '';
         const tagsArray = article.getAttribute('data-tags').split(' ');
         for (let tag of tagsArray) {
-            //const singularTag = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>\n';
             const singularTagData = { tagname: tag };
-            console.log(singularTagData);
             const singularTag = templates.tagLink(singularTagData);
             if (!allTags.hasOwnProperty(tag)) {
                 allTags[tag] = 1;
@@ -127,11 +126,13 @@ function generateTags() {
     }
     const tagList = document.querySelector(optTagsListSelector);
     const tagsParams = calculateTagsParams(allTags);
-    let allTagsHTML = '';
+    let allTagsData = { prefix: optCloudClassPrefix, tags: {} };
     for (let tag in allTags) {
-        allTagsHTML += '<li><a class="' + optCloudclassPrefix + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + ' ' + '</a></li>\n';
+        //allTagsHTML += '<li><a class="' + optCloudClassPrefix + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + ' ' + '</a></li>\n';
+        allTagsData.tags[tag] = calculateTagClass(allTags[tag], tagsParams);
     }
-    tagList.innerHTML = allTagsHTML;
+    tagList.innerHTML = templates.tagCloud(allTagsData);
+    console.log(allTagsData);
 }
 
 

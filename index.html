@@ -292,6 +292,11 @@
     <script id="template-author-link" type="text/x-handlebars-template">
         <a href="#author-{{authorLink}}">by {{author}}</a>
     </script>
+    <script id="template-tag-cloud" type="text/x-handlebars-tempate">
+        {{#each tags}}
+            <li><a class="{{../prefix}}{{this}}" href="#tag-{{ @key }}">{{ @key }}</a></li>
+        {{/each}}
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
     <script src="js/script.js"></script>
 </body>
