@@ -1,5 +1,12 @@
 'use strict';
 
+const templates = {
+    articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+    tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+    authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML)
+};
+
+
 function titleClickHandler(event) {
     event.preventDefault();
     const clickedElement = this;
@@ -40,7 +47,8 @@ function generateTitleLinks(customSelector = '') {
     for (let article of articleList) {
         const articleID = article.getAttribute('id');
         const articleTitle = article.querySelector(optTitleSelector).innerHTML;
-        const htmlElement = '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
+        const htmlElementData = { id: articleID, title: articleTitle };
+        const htmlElement = templates.articleLink(htmlElementData);
         html += htmlElement;
     }
     titleList.innerHTML = html;
@@ -104,7 +112,10 @@ function generateTags() {
         let html = '';
         const tagsArray = article.getAttribute('data-tags').split(' ');
         for (let tag of tagsArray) {
-            const singularTag = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>\n';
+            //const singularTag = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>\n';
+            const singularTagData = { tagname: tag };
+            console.log(singularTagData);
+            const singularTag = templates.tagLink(singularTagData);
             if (!allTags.hasOwnProperty(tag)) {
                 allTags[tag] = 1;
             } else {
@@ -178,7 +189,9 @@ function generateAuthors() {
         const authorWrapper = article.querySelector(optArticleAuthorSelector);
         const author = article.getAttribute('data-author');
         const authorWithDash = author.replace(' ', '-');
-        authorWrapper.innerHTML = '<a href="#author-' + authorWithDash + '">by ' + author + '</a>';
+        const authorLinkData = { authorLink: authorWithDash, author: author };
+        const authorLink = templates.authorLink(authorLinkData);
+        authorWrapper.innerHTML = authorLink;
     }
 
     let html = '';
